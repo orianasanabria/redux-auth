@@ -26,8 +26,20 @@ const Pokemons = () => {
     <div className="row">
       <div className="col-md-6">
         <h3 className="display-5">Pokemons</h3>
-        <br />
-        <div className="d-flex justify-content-between">
+        <ul className="list-group my-4">
+          {results.map((el) => (
+            <li key={el.name} className="list-group-item text-capitalize">
+              {el.name}
+              <button
+                onClick={() => dispatch(infoPokeAction(el.url))}
+                className="btn btn-outline-dark btn-sm float-end px-2"
+              >
+                +
+              </button>
+            </li>
+          ))}
+        </ul>
+        <div className="d-flex justify-content-between mb-5">
           {results.length === 0 && (
             <button
               className="btn btn-dark"
@@ -53,19 +65,6 @@ const Pokemons = () => {
             </button>
           )}
         </div>
-        <ul className="list-group mt-3">
-          {results.map((el) => (
-            <li key={el.name} className="list-group-item text-capitalize">
-              {el.name}
-              <button
-                onClick={() => dispatch(infoPokeAction(el.url))}
-                className="btn btn-outline-dark btn-sm float-end px-2"
-              >
-                +
-              </button>
-            </li>
-          ))}
-        </ul>
       </div>
       <div className="col-md-6">
         <h3 className="display-5">Details</h3>

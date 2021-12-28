@@ -1,18 +1,44 @@
-import React from "react";
-import Pokemons from './components/Pokemons.jsx'
-import generateStore from "./redux/store";
-import { Provider } from 'react-redux'
+import React from "react"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { auth } from "./config/firebase.js"
+import { onAuthStateChanged } from "firebase/auth"
+
+import Pokemons from "./components/Pokemons.jsx"
+import Navbar from "./components/Navbar.jsx"
+import Login from "./components/Login.jsx"
+import PrivateRoute from "./components/PrivateRoute.jsx"
 
 function App() {
-  const store = generateStore()
+  const [firebaseUser, setFirebaseUser] = React.useState(false)
 
-  return (
-    <Provider store={store}>
+  React.useEffect(() => {
+    const fetchData = () => {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setFirebaseUser(user)
+        } else {
+          setFirebaseUser(null)
+        }
+      })
+    }
+    fetchData()
+  }, [])
+
+  return firebaseUser !== false ? (
+    <Router>
+      <Navbar />
       <div className="container mt-3">
-        <Pokemons  />
+        <Routes>
+          <Route element={<PrivateRoute firebaseUser={firebaseUser} />}>
+            <Route path="/" element={<Pokemons />} />
+          </Route>
+          <Route path="/login" element={<Login />} />
+        </Routes>
       </div>
-    </Provider>
-  );
+    </Router>
+  ) : (
+    <div>Loading</div>
+  )
 }
 
-export default App;
+export default App

@@ -15,7 +15,7 @@ const Details = () => {
 	const {details} = useSelector(store => store.pokemons)
 
   return details ? (
-    <div className="card mt-5 text-center">
+    <div className="card mt-4 text-center">
       <div className="card-body">
 				<img src={details.img} className="img-fluid" />
         <div className="card-title text-uppercase fw-bold">{details.name}</div>
