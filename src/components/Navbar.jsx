@@ -7,7 +7,6 @@ const Navbar = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const active = useSelector((store) => store.user.active)
-  console.log(active)
   const signOut = () => {
     dispatch(signOutAction())
     navigate("/login")
@@ -23,6 +22,9 @@ const Navbar = () => {
           <>
             <NavLink className="btn btn-dark mr-2" to="/">
               Home
+            </NavLink>
+            <NavLink className="btn btn-dark mr-2" to="/profile">
+              Profile
             </NavLink>
             <button onClick={() => signOut()} className="btn btn-dark mr-2">
               Signout

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { auth } from "./config/firebase.js"
 import { onAuthStateChanged } from "firebase/auth"
 
+import Profile from "./components/Profile.jsx"
 import Pokemons from "./components/Pokemons.jsx"
 import Navbar from "./components/Navbar.jsx"
 import Login from "./components/Login.jsx"
@@ -31,13 +32,18 @@ function App() {
         <Routes>
           <Route element={<PrivateRoute firebaseUser={firebaseUser} />}>
             <Route path="/" element={<Pokemons />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
           <Route path="/login" element={<Login />} />
         </Routes>
       </div>
     </Router>
   ) : (
-    <div>Loading</div>
+    <div className="card-body">
+      <div className="d-flex justify-content-center">
+        <div className="spinner-border" role="status"></div>
+      </div>
+    </div>
   )
 }
 
